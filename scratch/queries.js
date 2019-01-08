@@ -3,16 +3,20 @@ const { MONGODB_URI } = require('../config');
 
 const Note = require('../models/note');
 
-/*mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
+mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
   .then(() => {
-    const searchTerm = 'lady gaga';
+    const searchTerm = 'Lorem';
     let filter = {};
 
-    if (searchTerm) {
-      filter.title = { $regex: searchTerm, $options: 'i' };
-    }
+    const regex = new RegExp(searchTerm, 'i');
 
-    return Note.find(filter).sort({ updatedAt: 'desc' });
+    return Note.find({
+        $or: [
+            {title: regex},
+            {content: regex}
+        ]
+    }).sort({ updatedAt: 'desc' });
+
   })
   .then(results => {
     console.log(results);
@@ -24,7 +28,7 @@ const Note = require('../models/note');
     console.error(`ERROR: ${err.message}`);
     console.error(err);
   });
-
+/*
   mongoose.connect(MONGODB_URI, {useNewUrlParser:true})
   .then(() => {
     let id = "111111111111111111111103";
@@ -97,4 +101,5 @@ mongoose.connect(MONGODB_URI, {useNewUrlParser: true})
   console.error(`ERROR: ${err.message}`);
   console.error(err);
 });
+
 */
