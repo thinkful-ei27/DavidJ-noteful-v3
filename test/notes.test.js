@@ -115,16 +115,10 @@ before(function () {
     };
 
     let res;
-    let data;
     let id;
-    // 1) First, call the database
     return Note.findOne()
       .then(_data => {
-        data = _data;
-        console.log(data);
-        console.log(_data.id);
-        console.log(id);
-        id = data.id;
+        id = _data.id;
         return chai.request(app)
         .put(`/api/notes/${id}`)
         .send(newItem)
@@ -135,10 +129,8 @@ before(function () {
           expect(res).to.be.json;
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.keys('id', 'title', 'content', 'createdAt', 'updatedAt');
-          // 2) then call the database
           return Note.findById(res.body.id);
         })
-        // 3) then compare the API response to the database results
         .then(data => {
           expect(res.body.id).to.equal(data.id);
           expect(res.body.title).to.not.equal(data.title);
@@ -146,6 +138,30 @@ before(function () {
           expect(new Date(res.body.createdAt)).to.eql(data.createdAt);
           expect(new Date(res.body.updatedAt)).to.not.eql(data.updatedAt);
         });
+    })
+  })
+
+  describe('DELETE /api/notes/:id', function() {
+    it('shouled delete an item and return a 204 No Content', function() {
+      let res;
+      let data;
+      let id;
+      return Note.findOne()
+        .then(_data => {
+          data = _data;
+          console.log(data);
+          console.log(_data.id);
+          console.log(id);
+          id = data.id;
+          return chai.request(app)
+          .del(`/api/notes/${id}`)
+        })
+        .then( function (_res) {
+          res = _res;
+          expect(res).to.have.status(204);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.not.have.keys('id', 'title', 'content', 'createdAt', 'updatedAt');
+        })
     })
   })
  
