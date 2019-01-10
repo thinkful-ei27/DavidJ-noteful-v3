@@ -142,8 +142,7 @@ before(function () {
   })
 
   describe('DELETE /api/notes/:id', function() {
-    it('shouled delete an item and return a 204 No Content', function() {
-      let res;
+    it('should delete an item and return a 204 No Content', function() {
       let data;
       let id;
       return Note.findOne()
@@ -156,8 +155,8 @@ before(function () {
           return chai.request(app)
           .del(`/api/notes/${id}`)
         })
-        .then( function (_res) {
-          res = _res;
+        .then( function (res) {
+          res
           expect(res).to.have.status(204);
           expect(res.body).to.be.a('object');
           expect(res.body).to.not.have.keys('id', 'title', 'content', 'createdAt', 'updatedAt');
