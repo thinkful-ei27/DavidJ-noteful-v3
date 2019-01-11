@@ -58,7 +58,7 @@ router.get('/', (req, res, next) => {
   router.put('/:id', (req, res, next) => {
     const id = req.params.id;
     const name = req.body.name;
-    if (!name) {
+      if (!name) {
       const err = new Error('Missing `name` in request body');
       err.status = 400;
       return next(err);

@@ -13,6 +13,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 before(function () {
+  console.log(TEST_MONGODB_URI);
     return mongoose.connect(TEST_MONGODB_URI, { useNewUrlParser:true })
       .then(() => mongoose.connection.db.dropDatabase());
   });
@@ -62,7 +63,7 @@ before(function () {
           expect(res).to.be.json;
 
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.keys('id', 'title', 'content', 'createdAt', 'updatedAt');
+          expect(res.body).to.have.keys('id', 'title', 'content', 'folderId','createdAt', 'updatedAt');;
 
           // 3) then compare database results to API response
           expect(res.body.id).to.equal(data.id);
@@ -128,7 +129,7 @@ before(function () {
           expect(res).to.have.status(200);
           expect(res).to.be.json;
           expect(res.body).to.be.a('object');
-          expect(res.body).to.have.keys('id', 'title', 'content', 'createdAt', 'updatedAt');
+          expect(res.body).to.have.keys('id', 'title', 'content','folderId',  'createdAt', 'updatedAt');
           return Note.findById(res.body.id);
         })
         .then(data => {
@@ -160,7 +161,7 @@ before(function () {
           res = _res;
           expect(res).to.have.status(204);
           expect(res.body).to.be.a('object');
-          expect(res.body).to.not.have.keys('id', 'title', 'content', 'createdAt', 'updatedAt');
+          expect(res.body).to.not.have.keys('id', 'title', 'content', 'folderId','createdAt', 'updatedAt');
         })
     })
   })

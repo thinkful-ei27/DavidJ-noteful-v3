@@ -43,11 +43,12 @@ router.get('/:id', (req, res, next) => {
 
 /* ========== POST/CREATE AN ITEM ========== */
 router.post('/', (req, res, next) => {
-  const title = req.body.title;
-  const content = req.body.content;
+  const {title, content, folderId} = req.body
+
   const noteObject = {
     title,
     content,
+    folderId,
   }
 
   Note.create(noteObject).then(result => {
@@ -64,11 +65,11 @@ router.post('/', (req, res, next) => {
 /* ========== PUT/UPDATE A SINGLE ITEM ========== */
 router.put('/:id', (req, res, next) => {
   const id = req.params.id;
-  const title = req.body.title;
-  const content = req.body.content;
+  const {title, content, folderId} = req.body
   const noteObject = {
     title,
     content,
+    folderId
   }
   
   Note.findByIdAndUpdate(id, noteObject).then( result => {
