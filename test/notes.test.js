@@ -11,9 +11,8 @@ const { notes } = require('../db/data');
 
 const expect = chai.expect;
 chai.use(chaiHttp);
-
+describe('Folders Test', function() {
 before(function () {
-  console.log(TEST_MONGODB_URI);
     return mongoose.connect(TEST_MONGODB_URI, { useNewUrlParser:true })
       .then(() => mongoose.connection.db.dropDatabase());
   });
@@ -150,9 +149,6 @@ before(function () {
       return Note.findOne()
         .then(_data => {
           data = _data;
-          console.log(data);
-          console.log(_data.id);
-          console.log(id);
           id = data.id;
           return chai.request(app)
           .del(`/api/notes/${id}`)
@@ -165,4 +161,5 @@ before(function () {
         })
     })
   })
+})
  

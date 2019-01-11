@@ -12,6 +12,7 @@ const { folders } = require('../db/data');
 const expect = chai.expect;
 chai.use(chaiHttp);
 
+describe('Notes test', function() {
   before(function () {
     return mongoose.connect(TEST_MONGODB_URI, { useNewUrlParser:true })
       .then(() => mongoose.connection.db.dropDatabase());
@@ -160,3 +161,4 @@ chai.use(chaiHttp);
         })
     })
   })
+});
